@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<!--
+		관리자정보반환 
+	 -->
+	<select id="searchAllMember" resultType="Map">
+		<![CDATA[
+		SELECT	 *       
+		FROM MEMBER_TB 
+		]]>
+	</select>
+	
+	<select id="searchMemberId" resultType="Map">
+		<![CDATA[
+		SELECT	 *       
+		FROM MEMBER_TB 
+		WHERE ADMIN_ID = #{ADMIN_ID}
+		]]>
+	</select>
+	
+	<select id="searchMemberName" resultType="Map">
+		<![CDATA[
+		SELECT	 *       
+		FROM MEMBER_TB
+		WHERE ADMIN_NM = #{ADMIN_NM}
+		]]>
+	</select>
+	
+	
+	<delete id="deleteMember" parameterType="Map" >
+		<![CDATA[
+		DELETE  
+		FROM MEMBER_TB
+		WHERE ADMIN_ID IN
+		]]>
+		<foreach item="mapMemberId" collection="MEMBER_ID"  index="index"  open="(" close=")" separator=",">
+            #{mapMemberId}
+        </foreach>
+	</delete>
+	
+	<insert id="addMember" parameterType="Map" >
+		<![CDATA[
+		INSERT 
+		INTO MEMBER_TB
+		VALUES(#{MEMBER_ID}, #{MEMBER_PWD}, #{MEMBER_NM}, #{TEL_NO}, #{MOBILE_NO}
+		, "", "", "", "", "", 0, now(), "", now(), "")
+		]]>
+	</insert>
+</mapper>
